@@ -1,0 +1,41 @@
+<div class="container">
+  <h3 class="text-center">List of all products:</h3>
+  <% if @products.empty? %>
+    <div class="card text-center" style="margin: 4em 10em 0 10em">
+      <h5>No Products in the Catalogue. <%= link_to 'Add New Product', new_product_path %></h5>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th>Product Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Tags</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td><%= product.id %></td>
+              <td><%= link_to product.name, product_path(product) %></td>
+              <td><%= product.price %></td>
+              <td>
+                <% product.tags.each do |tag| %>
+                  <%= link_to tag.name, tag_path(tag), class: 'btn btn-sm btn-outline-success',
+                              style: 'border-radius: 0px' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="margin: 1em" class="text-center">
+      <%= link_to 'Add New Product', new_product_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="card" style="margin: 0.5em 10em 10em 10em">
+    <%= render 'shared/errors', object: @product %>
+    <h3 class="text-center"><%= @product.persisted? ? 'Edit' : 'Create New' %> Product</h3>
+    <%= form_for @product do |p| %>
+      <div class="form-row">
+        <div class="form-group col-md-5" style="margin-left: 0.5em">
+          <%= p.label :name %>
+          <%= p.text_field :name, placeholder: 'Enter Name', class: 'form-control', required: true %>
+        </div>
+        <div class="offset-md-1"></div>
+        <div class="form-group col-md-3" style="margin-left: 0.5em">
+          <%= p.label :price %>
+          <%= p.number_field :price, placeholder: 'Enter Price', class: 'form-control', required: true %>
+        </div>
+      </div>
+      <p style="margin-left: 0.5em"><strong>Tags:</strong></p>
+      <div id="tags" style="margin-left: 0.5em">
+        <%= p.fields_for :tags do |tag| %>
+          <%#= render 'tag_fields', p: tag %>
+          <div class="nested-fields">
+            <%= tag.label :name %>
+            <%= tag.text_field :name %>
+            <%= link_to_remove_association "remove tag", tag if @product.tags.size > 2 %>
+          </div>
+        <% end %>
+        <div style="margin: 0 0 0.5em 3em">
+          <h6>Existing tags:</h6>
+          <% Tag.all.each do |tag| %>
+            <%= link_to tag.name, tag_path(tag), class: 'btn btn-sm btn-outline-info', style: 'border-radius: 0; margin-bottom: 0.5em' %>
+          <% end %>
+        </div>
+        <div class="form-actions">
+          <%= link_to_add_association 'Add Tag', p, :tags, partial: 'tag_fields', class: 'btn btn-sm btn-primary', style: 'margin-left: 3.25em',
+                                      data: {association_insertion_node: '#tags',
+                                             association_insertion_method: :append} %>
+        </div>
+      </div>
+      <%= link_to 'Cancel', products_path, class: 'btn btn-info', style: 'margin: 2em 0 1em 0.5em' %><br>
+      <%= p.submit ((@product.persisted?) ? 'Update' : 'Create') + ' Product', class: 'btn btn-success', style: 'margin: 0em 0 1em 0.5em' %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="card" style="margin: 0.5em 10em 10em 10em">
+    <div class="card-header">
+      <h5 style="float: left"><%= @product.name %></h5>
+      <%= link_to 'Edit Product', edit_product_path(@product), class: 'btn btn-sm btn-primary', style: 'float:right' %>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title" style="float: left">Tags:
+        <% @product.tags.each do |tag| %>
+          <%= link_to tag.name, tag_path(tag), class: 'btn btn-sm btn-outline-success', style: 'border-radius: 0' %>
+        <% end %>
+      </h5>
+      <h5 class="card-text" style="float: right">Price:
+        <%= @product.price %>
+      </h5>
+    </div>
+    <div class="card-footer">
+      <%= link_to 'Delete Product', product_path(@product), method: :delete, data: {confirm: 'Are you sure?'},
+                  class: 'btn btn-sm btn-danger' %>
+    </div>
+  </div>
+</div>

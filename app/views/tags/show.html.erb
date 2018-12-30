@@ -1,0 +1,12 @@
+<div style="margin: 1em" class="row">
+  <div class="col-md-12">
+    <p class="text-center">Products of <%= @tag.name %> tag:</p>
+  </div>
+  <% @tag.products.each do |product| %>
+    <div class="col-md-2 card" style="margin: 0.5em">
+      <p>
+        <%= link_to product.name, product_path(product) %>
+      </p>
+    </div>
+  <% end %>
+</div>
